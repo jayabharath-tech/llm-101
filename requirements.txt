@@ -1,0 +1,14 @@
+panel
+python-dotenv>=0.19.0
+openai
+numpy<2
+streamlit
+langchain
+langchain-community
+langchain-huggingface
+langchain-chroma
+langchain-text-splitters
+langchain-core
+langchain-groq
+sentence-transformers
+pypdf
