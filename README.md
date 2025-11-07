@@ -25,5 +25,5 @@ ollama runs on port 11434 by default
 ```bash
     pip install streamlit
     streamlit --version
-    streamlit run story.py
+    streamlit run story_basic.py
 ```

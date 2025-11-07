@@ -1,0 +1,33 @@
+Assignment: Building an LLM-Powered Application
+
+Objective:
+Participants will apply their learning from the course by building an AI-powered application using models offered by DeepInfra. The goal is to develop an application that allows users to generate personalized stories based on their inputs, similar to an AI-driven interactive storytelling platform.
+
+Assignment Overview:
+The application should leverage models available on DeepInfra.
+The app should include a frontend (UI) where users can provide inputs and receive AI-generated content.
+The backend should handle interactions with the LLM, process user inputs, and generate relevant outputs.
+Participants should focus on response quality
+
+Key Features to Include:
+User Input Mechanism: A simple and intuitive UI for users to get required inputs
+LLM Interaction: The backend should communicate with DeepInfra models to generate responses.
+Personalized Content Generation: The AI should tailor responses based on user input.
+
+Example Inputs:
+Genre: Users select a genre such as fantasy, mystery, or sci-fi to shape the style of the story.
+Number of Characters: User can get the number of characters as input, It could be a count or names
+Number of Paragraph/Sections: User get the number of paragraph as limit for the Story.
+
+Expected Outcomes:
+By completing this assignment, participants will:
+Gain hands-on experience in integrating LLMs into real-world applications.
+Learn to interface with DeepInfra APIs and handle AI-driven workflows.
+Build a functional AI-powered application that demonstrates creativity and problem-solving.
+Understand challenges like latency, prompt engineering, and response optimization.
+
+Good Add-on:
+Generate an individual Image per paragraph based on the content (as part of the first request)
+Give a summary/preface
+Implement additional changes on top of the first story generated
+

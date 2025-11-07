@@ -42,7 +42,7 @@ def check_moderation(text: str) -> bool:
         # Clean and check the response
         result = response.choices[0].message.content.strip().upper()
         # print(f"Moderation result for '{text}': {result}")  # Debug logging
-        
+
         # Return True if safe, False if unsafe
         return "SAFE" in result
 
@@ -51,7 +51,7 @@ def check_moderation(text: str) -> bool:
         return True  # Default to allowing if moderation check fails (fail open)
 
 
-def get_chat_completion(messages, model=MODEL, temperature=0):
+def get_chat_completion(messages, model=MODEL, temperature=0.0, max_tokens=2000):
     """
     Get a chat completion from the Groq model with streaming.
     """
@@ -60,6 +60,7 @@ def get_chat_completion(messages, model=MODEL, temperature=0):
             model=model,
             messages=messages,
             temperature=temperature,
+            max_tokens=max_tokens,
             stream=True
         )
         # Yield chunks for Streamlit streaming
@@ -69,6 +70,38 @@ def get_chat_completion(messages, model=MODEL, temperature=0):
     except Exception as e:
         print(f"Chat completion failed: {e}")
         yield "Error: Failed to generate response."
+
+
+def generate_image_prompt(paragraph):
+    """Generate a prompt for image generation based on story paragraph"""
+    system_prompt = """You are a creative prompt engineer. Create a detailed, visual description 
+    suitable for generating an image that captures the essence of the story paragraph."""
+
+    user_prompt = f"""Create a detailed, visual description based on this story paragraph:
+    {paragraph}
+
+    The description should be vivid and suitable for generating a high-quality image. 
+    Focus on the key visual elements, characters, and setting."""
+
+    try:
+        response = " ".join(get_chat_completion(
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_prompt}
+            ],
+            model=MODEL,
+            temperature=0.7,
+            max_tokens=200
+        )
+        )
+
+        if response:
+            return response.strip()
+
+        return "A beautiful illustration of the story scene"
+
+    except Exception:
+        return "A beautiful illustration of the story scene"
 
 
 class StoryTeller:
@@ -163,21 +196,21 @@ class StoryTeller:
         Keeps: system message + few-shot examples + recent conversation
         """
         messages = self.st.session_state.messages
-        
+
         # Find where few-shot examples end (after the last "what is python?" example)
         # Few-shot examples are the first 11 messages (1 system + 10 examples)
         few_shot_end_index = 11
-        
+
         # Get system message and few-shot examples
         base_messages = messages[:few_shot_end_index]
-        
+
         # Get recent conversation (everything after few-shot examples)
         recent_conversation = messages[few_shot_end_index:]
-        
+
         # Limit recent conversation to MAX_CONTEXT_MESSAGES
         if len(recent_conversation) > self.MAX_CONTEXT_MESSAGES:
             recent_conversation = recent_conversation[-self.MAX_CONTEXT_MESSAGES:]
-        
+
         # Combine base messages with limited recent conversation
         return base_messages + recent_conversation
 
