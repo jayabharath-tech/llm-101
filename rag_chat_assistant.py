@@ -31,6 +31,11 @@ os.environ["HF_TOKEN"] = os.getenv("HUGGINGFACE_API_KEY")
 embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
 # streamlit init
+st.set_page_config(
+    page_title="RAG QA Assistant",
+    page_icon="🤖",
+    layout="wide"
+)
 st.title("EduTrack QA Assistant")
 if "ui_messages" not in st.session_state:
     st.session_state.ui_messages = {}
